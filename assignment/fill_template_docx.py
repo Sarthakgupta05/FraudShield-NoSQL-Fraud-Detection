@@ -1,12 +1,11 @@
 """
 Fills the exact official institutional template 'NoSQL_Project_Formate (2).docx'
-with comprehensive FraudShield content, embedded diagrams, and student tables.
+with comprehensive FraudShield content, embedded diagrams, and student details.
 """
 
 import os
 import docx
 from docx.shared import Inches, Pt, RGBColor
-from docx.enum.text import WD_ALIGN_PARAGRAPH
 
 TEMPLATE_PATH = "/home/papaji/Downloads/NoSQL proj/NoSQL_Project_Formate (2).docx"
 FILLED_PATH = "/home/papaji/Downloads/NoSQL proj/NoSQL_Project_Formate_Filled.docx"
@@ -20,12 +19,12 @@ def populate_template():
     cell_s1 = doc.tables[0].rows[1].cells[0]
     cell_s1.text = ""
     s1_text = (
-        "Student Name: [Student Name]\n"
-        "Enrolment Number: [Enrolment Number]\n"
-        "Section: [Section]\n"
-        "Subject Name: NoSQL Databases / Advanced Database Management Systems\n"
-        "Email Address: [student.email@university.edu]\n"
-        "Contact No: [+91-XXXXXXXXXX]"
+        "Student Name: Sarthak Gupta\n"
+        "Enrolment Number: 2427010032\n"
+        "Section: Section J\n"
+        "Subject Name: NoSQL Databases\n"
+        "Email Address: sarthak.2005gupta@gmail.com\n"
+        "Contact No: 9599301499"
     )
     p = cell_s1.paragraphs[0]
     p.text = s1_text
@@ -182,7 +181,7 @@ def populate_template():
         "• Graph NoSQL Database: Neo4j 5.x / Graph Adjacency Engine (NetworkX & Cypher query models)\n"
         "• Frontend Interface: HTML5, CSS3, JavaScript ES6+, Vis.js Network Visualization\n"
         "• Testing & Validation: PyTest, HTTPX\n"
-        "• Documentation & Diagramming: Matplotlib, Python-Docx, ReportLab"
+        "• Documentation & Diagramming: Matplotlib, Python-Docx, ReportLab, LaTeX"
     )
     p13.runs[0].font.size = Pt(9.5)
 
@@ -250,16 +249,16 @@ def populate_template():
 
     # TABLE 2: Signature
     cell_sig = doc.tables[2].rows[1].cells[0]
-    cell_sig.text = "Signature: __________________________    Print name: [Student Name]    Date: September 25, 2026"
+    cell_sig.text = "Signature: __________________________    Print name: Sarthak Gupta    Date: September 25, 2026"
 
     # TABLE 3: Student Details Table
     row_details = doc.tables[3].rows[2]
-    vals = ["Student Details", "1.", "[Student Name]", "[Gender]", "Indian", "[Campus Address]"]
+    vals = ["Student Details", "1.", "Sarthak Gupta", "Male", "Indian", "Jaipur"]
     for j, val in enumerate(vals):
         row_details.cells[j].text = val
 
     doc.save(FILLED_PATH)
-    print("Successfully populated template:", FILLED_PATH)
+    print("Successfully populated template with student details:", FILLED_PATH)
 
 if __name__ == "__main__":
     populate_template()

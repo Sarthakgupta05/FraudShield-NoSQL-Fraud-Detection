@@ -6,12 +6,12 @@
 
 | Field | Details |
 | :--- | :--- |
-| **Student Name** | `[Student Name]` |
-| **Enrolment Number** | `[Enrolment Number]` |
-| **Section** | `[Section]` |
-| **Subject Name** | NoSQL Databases / Advanced Database Management Systems |
-| **Email Address** | `[student.email@university.edu]` |
-| **Contact No:** | `[+91-XXXXXXXXXX]` |
+| **Student Name** | Sarthak Gupta |
+| **Enrolment Number** | 2427010032 |
+| **Section** | Section J |
+| **Subject Name** | NoSQL Databases |
+| **Email Address** | sarthak.2005gupta@gmail.com |
+| **Contact No:** | 9599301499 |
 
 ---
 
@@ -27,7 +27,7 @@
 ---
 
 ### 4.) Problem Statement
-Modern digital payment ecosystems process tens of thousands of heterogeneous transactions per second. Organized cybercriminal syndicates bypass traditional relational database rules by utilizing complex multi-hop mule networks, circular fund routing, and synthetic identities across shared device clusters. Traditional relational databases fail due to exponential $O(V^k)$ join latency on deep recursive queries and rigid schemas unable to ingest polymorphic payment payloads with sub-second latency. *(65 words)*
+Modern digital payment ecosystems process tens of thousands of heterogeneous transactions per second. Organized cybercriminal syndicates bypass traditional relational database rules by utilizing complex multi-hop mule networks, circular fund routing, and synthetic identities across shared device clusters. Traditional relational databases fail due to exponential join latency on deep recursive queries and rigid schemas unable to ingest polymorphic payment payloads with sub-second latency. *(65 words)*
 
 ---
 
@@ -36,7 +36,7 @@ FraudShield implements a high-throughput, low-latency multi-model NoSQL architec
 
 - **Type of NoSQL Databases Proposed:**
   1. *Document Store (MongoDB):* For high-velocity ingestion of heterogeneous transaction logs, merchant profiles, device telemetry, and dynamic risk metadata.
-  2. *Graph Store (Neo4j / Graph Traversal Engine):* For modeling entities (Accounts, Cards, Devices, IP addresses) as interconnected vertices and payment flows as directed edges.
+  2. *Graph Store (Neo4j / Property Graph Engine):* For modeling entities (Accounts, Cards, Devices, IP addresses) as interconnected vertices and payment flows as directed edges.
 - **Reason for Selection:** MongoDB provides flexible BSON schemaless storage, write-optimized sharding, and fast secondary indexing. Neo4j delivers index-free adjacency ($O(1)$ traversal per hop) enabling millisecond cycle detection across massive networks where SQL table joins freeze.
 - **Type and Nature of Data:** High-velocity streaming JSON/BSON records, multi-attribute device fingerprints, geospatial coordinate pairs, and directed financial relationship subgraphs.
 - **Main Users:** FinTech Payment Gateways, Central Banking Regulatory Bodies, Fraud Analysts, and Compliance Risk Officers.
@@ -185,7 +185,7 @@ LIMIT 10;
 - **Primary Graph NoSQL:** Neo4j 5.x / Graph Adjacency Engine (NetworkX & Cypher query models)
 - **Frontend Technologies:** HTML5, Modern CSS3, JavaScript ES6+, Vis.js Network Visualization
 - **Testing & Verification:** PyTest, HTTPX
-- **Documentation & Report Engines:** Python-Docx, ReportLab, Matplotlib
+- **Documentation & Report Engines:** Python-Docx, ReportLab, Matplotlib, LaTeX
 
 ---
 
@@ -273,4 +273,4 @@ Output: RiskReport = {risk_score, classification, reasons}
 
 | S.No. | Name | Print Name | Gender | Nationality | Address |
 | :---: | :--- | :--- | :---: | :---: | :--- |
-| **1.** | `[Student Name]` | `[Student Name]` | `[Gender]` | Indian | `[Student Department / Campus Address]` |
+| **1.** | Sarthak Gupta | Sarthak Gupta | Male | Indian | Jaipur |

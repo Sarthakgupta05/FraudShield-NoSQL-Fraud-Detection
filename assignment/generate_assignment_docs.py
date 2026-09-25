@@ -1,6 +1,6 @@
 """
 Generate .docx and .pdf versions of the NoSQL Project Analysis Assignment
-with professional formatting, embedded high-res diagrams, and tables.
+with professional formatting, embedded high-res diagrams, and Sarthak Gupta's details.
 """
 
 import os
@@ -8,12 +8,12 @@ from docx import Document
 from docx.shared import Inches, Pt, RGBColor
 from docx.enum.text import WD_ALIGN_PARAGRAPH
 from docx.enum.table import WD_TABLE_ALIGNMENT
-from docx.oxml import OxmlElement, parse_xml
-from docx.oxml.ns import nsdecls, qn
+from docx.oxml import parse_xml
+from docx.oxml.ns import nsdecls
 
 from reportlab.lib.pagesizes import letter
 from reportlab.platypus import (
-    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image as RLImage, KeepTogether, PageBreak, HRFlowable
+    SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, Image as RLImage, PageBreak, HRFlowable
 )
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib import colors
@@ -73,12 +73,12 @@ def generate_docx():
     table.autofit = False
 
     details = [
-        ("Student Name", "[Student Name]"),
-        ("Enrolment Number", "[Enrolment Number]"),
-        ("Section", "[Section]"),
-        ("Subject Name", "NoSQL Databases / Advanced Database Management Systems"),
-        ("Email Address", "[student.email@university.edu]"),
-        ("Contact No:", "[+91-XXXXXXXXXX]")
+        ("Student Name", "Sarthak Gupta"),
+        ("Enrolment Number", "2427010032"),
+        ("Section", "Section J"),
+        ("Subject Name", "NoSQL Databases"),
+        ("Email Address", "sarthak.2005gupta@gmail.com"),
+        ("Contact No:", "9599301499")
     ]
 
     for i, (label, val) in enumerate(details):
@@ -235,7 +235,7 @@ def generate_docx():
         "• Graph NoSQL Database: Neo4j 5.x / Graph Adjacency Engine (NetworkX & Cypher query models)\n"
         "• Frontend Interface: HTML5, CSS3, JavaScript ES6+, Vis.js Network Visualization\n"
         "• Testing & Validation: PyTest, HTTPX\n"
-        "• Documentation & Diagramming: Matplotlib, Python-Docx, ReportLab"
+        "• Documentation & Diagramming: Matplotlib, Python-Docx, ReportLab, LaTeX"
     ).font.size = Pt(10)
 
     # 14. Current Stage
@@ -310,7 +310,7 @@ def generate_docx():
         c.paragraphs[0].add_run(h_text).font.bold = True
         set_cell_background(c, "E2E8F0")
 
-    vals = ["1.", "[Student Name]", "[Student Name]", "[Gender]", "Indian", "[Department / Campus Address]"]
+    vals = ["1.", "Sarthak Gupta", "Sarthak Gupta", "Male", "Indian", "Jaipur"]
     for j, val in enumerate(vals):
         sig_table.rows[1].cells[j].paragraphs[0].add_run(val)
 
@@ -328,7 +328,6 @@ def generate_pdf():
     )
     styles = getSampleStyleSheet()
     
-    # Custom styles
     title_style = ParagraphStyle(
         'DocTitle',
         parent=styles['Normal'],
@@ -376,7 +375,6 @@ def generate_pdf():
 
     story = []
 
-    # Title
     story.append(Paragraph("NoSQL Project Analysis Assignment", title_style))
     story.append(Spacer(1, 4))
     story.append(Paragraph("FraudShield: Real-Time Multi-Model NoSQL Financial Fraud Detection System", subtitle_style))
@@ -386,12 +384,12 @@ def generate_pdf():
     # 1. Details Table
     story.append(Paragraph("1.) Please fill in your personal and contact details", h1_style))
     details_data = [
-        [Paragraph("<b>Student Name</b>", body_style), Paragraph("[Student Name]", body_style)],
-        [Paragraph("<b>Enrolment Number</b>", body_style), Paragraph("[Enrolment Number]", body_style)],
-        [Paragraph("<b>Section</b>", body_style), Paragraph("[Section]", body_style)],
-        [Paragraph("<b>Subject Name</b>", body_style), Paragraph("NoSQL Databases / Advanced DBMS", body_style)],
-        [Paragraph("<b>Email Address</b>", body_style), Paragraph("[student.email@university.edu]", body_style)],
-        [Paragraph("<b>Contact No:</b>", body_style), Paragraph("[+91-XXXXXXXXXX]", body_style)],
+        [Paragraph("<b>Student Name</b>", body_style), Paragraph("Sarthak Gupta", body_style)],
+        [Paragraph("<b>Enrolment Number</b>", body_style), Paragraph("2427010032", body_style)],
+        [Paragraph("<b>Section</b>", body_style), Paragraph("Section J", body_style)],
+        [Paragraph("<b>Subject Name</b>", body_style), Paragraph("NoSQL Databases", body_style)],
+        [Paragraph("<b>Email Address</b>", body_style), Paragraph("sarthak.2005gupta@gmail.com", body_style)],
+        [Paragraph("<b>Contact No:</b>", body_style), Paragraph("9599301499", body_style)],
     ]
     t1 = Table(details_data, colWidths=[150, 380])
     t1.setStyle(TableStyle([
@@ -530,7 +528,7 @@ Algorithm: EvaluateTransactionRisk(Transaction T)
 
     sig_data = [
         ["S.No.", "Name", "Print Name", "Gender", "Nationality", "Address"],
-        ["1.", "[Student Name]", "[Student Name]", "[Gender]", "Indian", "[Department / Campus Address]"]
+        ["1.", "Sarthak Gupta", "Sarthak Gupta", "Male", "Indian", "Jaipur"]
     ]
     t_sig = Table(sig_data, colWidths=[40, 100, 100, 50, 70, 170])
     t_sig.setStyle(TableStyle([
