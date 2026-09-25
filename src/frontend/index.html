@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FraudShield - NoSQL Real-Time Fraud Detection Engine</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <!-- Vis.js for Network Graph Rendering -->
+    <script type="text/javascript" src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <!-- Top Navigation Header -->
+    <header class="navbar">
+        <div class="nav-brand">
+            <div class="logo-badge"><i data-lucide="shield-alert"></i></div>
+            <div>
+                <h1>FraudShield <span class="badge-tag">NoSQL Engine</span></h1>
+                <p class="subtitle">Multi-Model Graph (Neo4j) & Document (MongoDB) Real-Time Risk Intelligence</p>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <div class="db-status-pill" id="db-status-badge">
+                <span class="pulse-dot"></span>
+                <span id="db-status-text">Multi-Model NoSQL Active</span>
+            </div>
+            <button class="btn btn-secondary" onclick="resetDatabase()"><i data-lucide="rotate-ccw"></i> Reset Data</button>
+            <button class="btn btn-primary" onclick="triggerSimModal()"><i data-lucide="play"></i> Simulate Stream</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        
+        <!-- Metrics Row -->
+        <section class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-header">
+                    <span>Total Transactions</span>
+                    <i data-lucide="activity" class="metric-icon blue"></i>
+                </div>
+                <div class="metric-value" id="total-txs-val">0</div>
+                <div class="metric-sub" id="total-vol-val">Volume: ₹0.00</div>
+            </div>
+
+            <div class="metric-card danger-card">
+                <div class="metric-header">
+                    <span>High-Risk Interceptions</span>
+                    <i data-lucide="shield-ban" class="metric-icon red"></i>
+                </div>
+                <div class="metric-value red-text" id="blocked-txs-val">0</div>
+                <div class="metric-sub" id="blocked-rate-val">0% of total volume</div>
+            </div>
+
+            <div class="metric-card warning-card">
+                <div class="metric-header">
+                    <span>Circular Fraud Rings</span>
+                    <i data-lucide="refresh-cw" class="metric-icon orange"></i>
+                </div>
+                <div class="metric-value orange-text" id="fraud-rings-val">0</div>
+                <div class="metric-sub" id="mules-val">0 Mule Accounts Detected</div>
+            </div>
+
+            <div class="metric-card success-card">
+                <div class="metric-header">
+                    <span>NoSQL Latency (Graph+Doc)</span>
+                    <i data-lucide="zap" class="metric-icon green"></i>
+                </div>
+                <div class="metric-value green-text" id="latency-val">6.4 ms</div>
+                <div class="metric-sub">Sub-20ms SLA Maintained</div>
+            </div>
+        </section>
+
+        <!-- Simulation Control Bar -->
+        <section class="simulator-bar">
+            <div class="sim-label">
+                <i data-lucide="cpu"></i>
+                <span>Inject Synthetic Pattern:</span>
+            </div>
+            <div class="sim-buttons">
+                <button class="btn-sim normal" onclick="injectScenario('normal', 5)">
+                    <i data-lucide="check-circle-2"></i> +5 Normal Transactions
+                </button>
+                <button class="btn-sim ring" onclick="injectScenario('ring', 3)">
+                    <i data-lucide="repeat"></i> +3-Hop Circular Fraud Ring
+                </button>
+                <button class="btn-sim smurfing" onclick="injectScenario('smurfing', 4)">
+                    <i data-lucide="share-2"></i> +Mule Smurfing Network
+                </button>
+                <button class="btn-sim burst" onclick="injectScenario('burst', 5)">
+                    <i data-lucide="zap"></i> +Velocity Burst Card Attack
+                </button>
+            </div>
+        </section>
+
+        <!-- Main Dashboard Split (Graph on Left, Live Feed on Right) -->
+        <div class="dashboard-grid">
+            
+            <!-- Left: Graph Explorer -->
+            <div class="card graph-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i data-lucide="git-fork"></i>
+                        <span>Real-Time Graph Topology Explorer (Neo4j Adjacency Model)</span>
+                    </div>
+                    <div class="graph-legend">
+                        <span class="legend-item"><span class="legend-color account"></span> Account</span>
+                        <span class="legend-item"><span class="legend-color device"></span> Shared Device</span>
+                        <span class="legend-item"><span class="legend-color edge"></span> Payment Edge</span>
+                    </div>
+                </div>
+                <div class="card-body graph-container" id="graph-network-view">
+                    <div class="graph-loading">Loading graph topology...</div>
+                </div>
+                <div class="card-footer graph-footer">
+                    <span id="graph-node-count">Nodes: 0 | Edges: 0</span>
+                    <button class="btn-sm" onclick="refreshGraph()"><i data-lucide="refresh-cw"></i> Reposition Graph</button>
+                </div>
+            </div>
+
+            <!-- Right: Real-time Live Stream & Alerts -->
+            <div class="card live-card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i data-lucide="radio"></i>
+                        <span>Live Transaction Stream & Risk Inference</span>
+                    </div>
+                    <div class="live-indicator">
+                        <span class="live-dot"></span> LIVE
+                    </div>
+                </div>
+                <div class="card-body table-container">
+                    <table class="tx-table">
+                        <thead>
+                            <tr>
+                                <th>Tx ID</th>
+                                <th>Flow (From &rarr; To)</th>
+                                <th>Amount</th>
+                                <th>Risk Score</th>
+                                <th>Decision</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tx-table-body">
+                            <!-- Populated dynamically via JS/WebSocket -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom Row: Detected Fraud Rings & NoSQL Raw Document Inspector -->
+        <div class="bottom-grid">
+            
+            <!-- Fraud Rings Panel -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i data-lucide="alert-triangle"></i>
+                        <span>Discovered Fraud Rings & Mule Networks</span>
+                    </div>
+                    <button class="btn-sm" onclick="fetchFraudInsights()"><i data-lucide="search"></i> Rescan Topology</button>
+                </div>
+                <div class="card-body" id="fraud-rings-container">
+                    <div class="empty-state">No circular loops or mule networks detected.</div>
+                </div>
+            </div>
+
+            <!-- NoSQL Document & Cypher Query Console -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i data-lucide="database"></i>
+                        <span>MongoDB Document & Cypher Query Inspector</span>
+                    </div>
+                </div>
+                <div class="card-body json-viewer">
+                    <pre id="json-preview">// Click any transaction row in the table above to inspect its raw BSON Document payload in MongoDB...</pre>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>FraudShield NoSQL Architecture Project • Designed for High-Throughput Distributed Graph & Document Intelligence</p>
+    </footer>
+
+    <script src="/static/app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
